@@ -18,6 +18,12 @@ export default {
 </script>
 
 <template>
-  <h1>This is the homepage</h1>
-  <button @click="getUser">Klicka</button>
+  <v-container fluid>
+    <v-row justify="center">
+      <v-col cols="8" class="d-flex justify-space-between align-center">
+        <h1>This is the homepage</h1>
+        <v-btn variant="flat" color="black" @click="getUser">Klicka</v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>

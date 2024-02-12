@@ -1,26 +1,55 @@
+<script>
+export default {
+  data() {
+    return {
+      drawer: false,
+      search: false
+    }
+  }
+}
+</script>
+
 <template>
   <v-card>
     <v-app-bar app density="compact" flat class="app-bar-border">
       <v-container fluid>
         <v-row justify="center">
-          <v-col cols="9" class="d-flex justify-space-between align-center">
-            <!-- Hamburger + magnify-->
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-            <v-btn icon>
-              <v-icon>mdi-magnify</v-icon>
-            </v-btn>
+          <v-col cols="8" class="d-flex justify-space-between align-center">
+            <!-- Hamburger Menu Navigation-Drawer toggle -->
+            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <!-- Search toggle -->
+            <v-btn icon="mdi-magnify" @click="search = !search" />
+            <!-- Use v-if to toggle the visibility of the search div -->
+            <div v-if="search" class="d-flex align-center">
+              <!-- Search Field and Button -->
+              <v-text-field v-model="searchText" label="Search" hide-details></v-text-field>
+              <v-btn @click="onSearch" text="Go" color="black" variant="flat" />
+            </div>
             <!-- The title will be centered in the middle of the toolbar -->
             <v-toolbar-title class="text-center"
               ><router-link to="/" class="remove-styling text-h5 font-weight-black"
                 >Real News</router-link
               ></v-toolbar-title
             >
+
             <!-- Log In on the right -->
-            <v-btn color="black" variant="flat" text="Log In" />
+            <v-btn color="black" variant="flat" text="Log In" to="/login" />
           </v-col>
         </v-row>
       </v-container>
     </v-app-bar>
+    <!-- The navigation drawer that shows up when hamburger icon is clicked on -->
+    <v-navigation-drawer location="left" v-model="drawer" temporary :width="200" :elevation="0">
+      <v-list density="compact" nav>
+        <v-list-item prepend-icon="mdi-home-city" title="Homepage" value="home"></v-list-item>
+        <v-list-item prepend-icon="mdi-account" title="My Account" value="account"></v-list-item>
+        <v-list-item
+          prepend-icon="mdi-account-group-outline"
+          title="Users"
+          value="users"
+        ></v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </v-card>
 </template>
 
