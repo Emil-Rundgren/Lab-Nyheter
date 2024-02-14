@@ -130,5 +130,83 @@ export default {
         </v-sheet>
       </v-col>
     </v-row>
+    <!-- Third Row -->
+    <v-row justify="center">
+      <v-col cols="4">
+        <v-sheet class="ma-2">
+          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[5].newsImg"></v-img
+        ></v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[5].newsTitle }}
+          </h3>
+
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[5].newsDescription }}
+          </p>
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="4">
+        <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
+          <v-img
+            height="30vh"
+            cover
+            v-if="newsItems.length > 0"
+            :src="newsItems[6].newsImg"
+          ></v-img>
+        </v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[6].newsTitle }}
+          </h3>
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[6].newsDescription }}
+          </p>
+
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
+    </v-row>
+    <!-- Fourth Row -->
+    <v-row justify="center">
+      <v-col cols="4">
+        <v-sheet class="ma-2">
+          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[7].newsImg"></v-img
+        ></v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[7].newsTitle }}
+          </h3>
+
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[7].newsDescription }}
+          </p>
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="4">
+        <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
+          <v-img
+            height="30vh"
+            cover
+            v-if="newsItems.length > 0"
+            :src="newsItems[8].newsImg"
+          ></v-img>
+        </v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[8].newsTitle }}
+          </h3>
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[8].newsDescription }}
+          </p>
+
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
