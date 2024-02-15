@@ -37,8 +37,8 @@ export default {
         auth.logIn()
         // Hide animation
         this.isLoading = false
-        // Redirect user to homepage
-        this.$router.push('/')
+        // Redirect user to the previous page
+        this.$router.go(-1)
       }, 3000)
     }
   }

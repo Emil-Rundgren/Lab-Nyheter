@@ -4,7 +4,19 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      newsItems: []
+      // The array that gets populated by the map-function
+      newsItems: [],
+      itemsPerRow: 3 // Determines how many items per row
+    }
+  },
+  computed: {
+    // Slices the newsItems array into arrays of a specific size (itemsPerRow)
+    sliceNewsItems() {
+      let result = [] // The sliced arrays
+      for (let i = 0; i < this.newsItems.length; i += this.itemsPerRow) {
+        result.push(this.newsItems.slice(i, i + this.itemsPerRow))
+      }
+      return result
     }
   },
   async created() {
@@ -17,19 +29,17 @@ export default {
         const response = await axios.get(
           'https://newsapi.org/v2/top-headlines?country=us&apiKey=65198de0fc7e418eb3db417f3e104479'
         )
-        this.news = response.data.articles
         // Add data to newsItems after news data is fetched
-        if (this.news && this.news.length > 0) {
-          // article represents an individual element (object)
-          // In each article there are three key newsImg...
-          // If fetched value is falsy(undifined) add default value instead
-          this.newsItems = this.news.map((article) => ({
-            newsImg: article.urlToImage || './neom-WLeWJW_WneE-unsplash.jpeg',
-            newsTitle: article.title || 'No title available',
-            newsDescription: article.description || 'No description available'
-          }))
-        }
-        console.log(this.newsItems)
+        // article represents an individual element (object)
+        // In each article there are four keys newsImg...
+        // If fetched value is falsy(undifined) add default value instead
+        console.log(response.data.articles)
+        this.newsItems = response.data.articles.map((article) => ({
+          newsImg: article.urlToImage || './neom-WLeWJW_WneE-unsplash.jpeg',
+          newsTitle: article.title || 'No title available',
+          newsDescription: article.description || 'No description available',
+          newsContent: article.content || 'No content available'
+        }))
       } catch (error) {
         console.error(error)
       }
@@ -38,173 +48,25 @@ export default {
 }
 </script>
 
-<!-- v-if="newsItems.length > 0" is needed otherwise the template will try to access the fetced data before it has been fetched -->
 <template>
   <v-container fluid>
     <!-- Header Row -->
     <v-row>
-      <!-- Offset pushes the col 2 v-col to the right -->
       <v-col cols="4" offset="2">
         <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
-          <h1>Politices</h1>
+          <h1>World News</h1>
         </v-sheet>
       </v-col>
     </v-row>
 
-    <!-- First Row -->
-    <v-row justify="center">
-      <v-col cols="4">
-        <v-sheet class="ma-2">
-          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[0].newsImg"></v-img
-        ></v-sheet>
-        <v-sheet class="ma-2">
-          <h3 v-if="newsItems.length > 0">
-            {{ newsItems[0].newsTitle }}
-          </h3>
-
-          <p v-if="newsItems.length > 0">
-            {{ newsItems[0].newsDescription }}
-          </p>
-          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+    <!-- News Rows -->
+    <v-row v-for="(row, rowIndex) in sliceNewsItems" :key="`row-${rowIndex}`" justify="center">
+      <v-col cols="4" v-for="(item, index) in row" :key="`item-${index}`">
+        <v-sheet class="ma-2 clickable" style="cursor: pointer">
+          <v-img height="30vh" cover :src="item.newsImg"></v-img>
         </v-sheet>
-      </v-col>
-
-      <v-col cols="4">
-        <v-sheet class="ma-2">
-          <v-img
-            height="30vh"
-            cover
-            v-if="newsItems.length > 0"
-            :src="newsItems[1].newsImg"
-          ></v-img>
-        </v-sheet>
-        <v-sheet class="ma-2">
-          <h3 v-if="newsItems.length > 0">
-            {{ newsItems[1].newsTitle }}
-          </h3>
-          <p v-if="newsItems.length > 0">
-            {{ newsItems[1].newsDescription }}
-          </p>
-
-          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
-        </v-sheet>
-      </v-col>
-    </v-row>
-
-    <!-- Second Row -->
-    <v-row justify="center">
-      <v-col cols="4">
-        <v-sheet class="ma-2">
-          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[2].newsImg"></v-img
-        ></v-sheet>
-        <v-sheet class="ma-2">
-          <h3 v-if="newsItems.length > 0">
-            {{ newsItems[2].newsTitle }}
-          </h3>
-
-          <p v-if="newsItems.length > 0">
-            {{ newsItems[2].newsDescription }}
-          </p>
-          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
-        </v-sheet>
-      </v-col>
-
-      <v-col cols="4">
-        <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
-          <v-img
-            height="30vh"
-            cover
-            v-if="newsItems.length > 0"
-            :src="newsItems[4].newsImg"
-          ></v-img>
-        </v-sheet>
-        <v-sheet class="ma-2">
-          <h3 v-if="newsItems.length > 0">
-            {{ newsItems[4].newsTitle }}
-          </h3>
-          <p v-if="newsItems.length > 0">
-            {{ newsItems[4].newsDescription }}
-          </p>
-
-          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
-        </v-sheet>
-      </v-col>
-    </v-row>
-    <!-- Third Row -->
-    <v-row justify="center">
-      <v-col cols="4">
-        <v-sheet class="ma-2">
-          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[5].newsImg"></v-img
-        ></v-sheet>
-        <v-sheet class="ma-2">
-          <h3 v-if="newsItems.length > 0">
-            {{ newsItems[5].newsTitle }}
-          </h3>
-
-          <p v-if="newsItems.length > 0">
-            {{ newsItems[5].newsDescription }}
-          </p>
-          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
-        </v-sheet>
-      </v-col>
-
-      <v-col cols="4">
-        <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
-          <v-img
-            height="30vh"
-            cover
-            v-if="newsItems.length > 0"
-            :src="newsItems[6].newsImg"
-          ></v-img>
-        </v-sheet>
-        <v-sheet class="ma-2">
-          <h3 v-if="newsItems.length > 0">
-            {{ newsItems[6].newsTitle }}
-          </h3>
-          <p v-if="newsItems.length > 0">
-            {{ newsItems[6].newsDescription }}
-          </p>
-
-          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
-        </v-sheet>
-      </v-col>
-    </v-row>
-    <!-- Fourth Row -->
-    <v-row justify="center">
-      <v-col cols="4">
-        <v-sheet class="ma-2">
-          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[7].newsImg"></v-img
-        ></v-sheet>
-        <v-sheet class="ma-2">
-          <h3 v-if="newsItems.length > 0">
-            {{ newsItems[7].newsTitle }}
-          </h3>
-
-          <p v-if="newsItems.length > 0">
-            {{ newsItems[7].newsDescription }}
-          </p>
-          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
-        </v-sheet>
-      </v-col>
-
-      <v-col cols="4">
-        <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
-          <v-img
-            height="30vh"
-            cover
-            v-if="newsItems.length > 0"
-            :src="newsItems[8].newsImg"
-          ></v-img>
-        </v-sheet>
-        <v-sheet class="ma-2">
-          <h3 v-if="newsItems.length > 0">
-            {{ newsItems[8].newsTitle }}
-          </h3>
-          <p v-if="newsItems.length > 0">
-            {{ newsItems[8].newsDescription }}
-          </p>
-
-          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        <v-sheet class="ma-2 clickable" style="cursor: pointer">
+          <h3>{{ item.newsTitle }}</h3>
         </v-sheet>
       </v-col>
     </v-row>
