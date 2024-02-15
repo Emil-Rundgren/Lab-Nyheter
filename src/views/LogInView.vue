@@ -1,4 +1,6 @@
 <script>
+// Get info from Pinia
+import { loggedInStore } from '@/stores/counter'
 export default {
   data() {
     return {
@@ -26,11 +28,17 @@ export default {
       if (this.form.email === '') {
         return
       }
-      // If the user has entered
+      // If this.form.email !== ''
+      // Show loading animation (v-progress-circular) for 3 sec
       this.isLoading = true
       setTimeout(() => {
+        // Change the state of isLoggedIn to true so that the button in Navbar component changes to Log Out
+        const auth = loggedInStore()
+        auth.logIn()
+        // Hide animation
         this.isLoading = false
-        alert(JSON.stringify(this.form))
+        // Redirect user to homepage
+        this.$router.push('/')
       }, 3000)
     }
   }
@@ -40,7 +48,7 @@ export default {
 <template>
   <v-container fluid>
     <v-overlay :model-value="isLoading">
-      <v-progress-circular v-if="isLoading" indeterminate color="white"></v-progress-circular>
+      <v-progress-circular v-if="isLoading" indeterminate color="white" />
     </v-overlay>
     <v-row justify="center">
       <v-col cols="4">

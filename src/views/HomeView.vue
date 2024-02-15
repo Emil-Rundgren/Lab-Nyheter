@@ -41,28 +41,23 @@ export default {
 <!-- v-if="newsItems.length > 0" is needed otherwise the template will try to access the fetced data before it has been fetched -->
 <template>
   <v-container fluid>
+    <!-- Header Row -->
     <v-row>
       <!-- Offset pushes the col 2 v-col to the right -->
       <v-col cols="4" offset="2">
-        <v-sheet class="ma-2"> <h1>World News</h1> </v-sheet>
+        <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
+          <h1>World News</h1>
+        </v-sheet>
       </v-col>
     </v-row>
 
-    <!-- The Structure of the layout Under World News -->
-    <!-- The first v-row contains all content -->
-    <!-- In the first v-row there is 2 v-col -->
-    <!-- The First v-col takes up all the space in the first v-row -->
-    <!-- The Second v-col has 2 inner v-rows -->
-    <!-- Each inner v-rows contains 2 v-col -->
-
-    <!-- Outer v-row -->
+    <!-- First Row -->
     <v-row justify="center">
-      <!-- Start of First v-col -->
       <v-col cols="4">
         <v-sheet class="ma-2">
-          <v-img height="40vh" cover v-if="newsItems.length > 0" :src="newsItems[0].newsImg"></v-img
+          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[0].newsImg"></v-img
         ></v-sheet>
-        <v-sheet class="ma-2" style="height: 40vh">
+        <v-sheet class="ma-2">
           <h3 v-if="newsItems.length > 0">
             {{ newsItems[0].newsTitle }}
           </h3>
@@ -73,67 +68,145 @@ export default {
           <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
         </v-sheet>
       </v-col>
-      <!-- End of First v-col -->
 
-      <!-- Start of Second v-col -->
       <v-col cols="4">
-        <!-- Start of First inner v-row -->
-        <v-row justify="center">
-          <!-- Start of First inner v-row inner 1 v-col -->
-          <v-col cols="6">
-            <v-sheet class="ma-2" style="height: 40vh">
-              <h3 v-if="newsItems.length > 0">
-                {{ newsItems[2].newsTitle }}
-              </h3>
+        <v-sheet class="ma-2">
+          <v-img
+            height="30vh"
+            cover
+            v-if="newsItems.length > 0"
+            :src="newsItems[1].newsImg"
+          ></v-img>
+        </v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[1].newsTitle }}
+          </h3>
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[1].newsDescription }}
+          </p>
 
-              <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
-            </v-sheet>
-          </v-col>
-          <!-- End of First inner v-row inner 1 v-col -->
-          <!-- Start of First inner v-row inner 2 v-col -->
-          <v-col cols="6">
-            <v-sheet class="ma-2">
-              <v-img
-                height="30vh"
-                cover
-                v-if="newsItems.length > 0"
-                :src="newsItems[2].newsImg"
-              ></v-img>
-            </v-sheet>
-          </v-col>
-          <!-- End of First inner v-row inner 2 v-col -->
-        </v-row>
-        <!-- End of First inner v-row -->
-
-        <!-- Start of Second inner v-row -->
-        <v-row justify="center">
-          <!-- Start of Second inner v-row inner 1 v-col -->
-          <v-col cols="6">
-            <v-sheet class="ma-2">
-              <v-img
-                height="30vh"
-                cover
-                v-if="newsItems.length > 0"
-                :src="newsItems[4].newsImg"
-              ></v-img
-            ></v-sheet>
-          </v-col>
-          <!-- End of Second inner v-row inner 1 v-col -->
-          <!-- Start of First inner v-row inner 2 v-col -->
-          <v-col cols="6">
-            <v-sheet class="ma-2" style="height: 40vh">
-              <h3 class="text-h6 text-md-h5 text-lg-h6" v-if="newsItems.length > 0">
-                {{ newsItems[4].newsTitle }}
-              </h3>
-
-              <v-btn color="black" class="mt-3" text="Read More" to="/login" />
-            </v-sheet>
-          </v-col>
-          <!-- End of First inner v-row inner 2 v-col -->
-        </v-row>
-        <!-- End of Second inner v-row -->
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
       </v-col>
-      <!-- End of Second v-col -->
+    </v-row>
+
+    <!-- Second Row -->
+    <v-row justify="center">
+      <v-col cols="4">
+        <v-sheet class="ma-2">
+          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[2].newsImg"></v-img
+        ></v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[2].newsTitle }}
+          </h3>
+
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[2].newsDescription }}
+          </p>
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="4">
+        <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
+          <v-img
+            height="30vh"
+            cover
+            v-if="newsItems.length > 0"
+            :src="newsItems[4].newsImg"
+          ></v-img>
+        </v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[4].newsTitle }}
+          </h3>
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[4].newsDescription }}
+          </p>
+
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
+    </v-row>
+    <!-- Third Row -->
+    <v-row justify="center">
+      <v-col cols="4">
+        <v-sheet class="ma-2">
+          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[5].newsImg"></v-img
+        ></v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[5].newsTitle }}
+          </h3>
+
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[5].newsDescription }}
+          </p>
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="4">
+        <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
+          <v-img
+            height="30vh"
+            cover
+            v-if="newsItems.length > 0"
+            :src="newsItems[6].newsImg"
+          ></v-img>
+        </v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[6].newsTitle }}
+          </h3>
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[6].newsDescription }}
+          </p>
+
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
+    </v-row>
+    <!-- Fourth Row -->
+    <v-row justify="center">
+      <v-col cols="4">
+        <v-sheet class="ma-2">
+          <v-img height="30vh" cover v-if="newsItems.length > 0" :src="newsItems[7].newsImg"></v-img
+        ></v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[7].newsTitle }}
+          </h3>
+
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[7].newsDescription }}
+          </p>
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="4">
+        <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
+          <v-img
+            height="30vh"
+            cover
+            v-if="newsItems.length > 0"
+            :src="newsItems[8].newsImg"
+          ></v-img>
+        </v-sheet>
+        <v-sheet class="ma-2">
+          <h3 v-if="newsItems.length > 0">
+            {{ newsItems[8].newsTitle }}
+          </h3>
+          <p v-if="newsItems.length > 0">
+            {{ newsItems[8].newsDescription }}
+          </p>
+
+          <v-btn class="mt-3" color="black" variant="flat" text="Read More" to="/login" />
+        </v-sheet>
+      </v-col>
     </v-row>
   </v-container>
 </template>

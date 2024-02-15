@@ -9,6 +9,18 @@ export default {
 }
 </script>
 
+<!-- Pinia Script for loging out  -->
+<!-- Because the component is avilable in every view I only need to declare it here -->
+<!-- The log In is in the LogInView -->
+<script setup>
+import { loggedInStore } from '@/stores/counter'
+
+const auth = loggedInStore()
+function logOut() {
+  auth.logOut()
+}
+</script>
+
 <template>
   <v-app-bar app density="compact" flat class="app-bar-border">
     <v-container fluid>
@@ -31,8 +43,15 @@ export default {
             ></v-toolbar-title
           >
 
-          <!-- Log In on the right -->
-          <v-btn color="black" variant="flat" text="Log In" to="/login" />
+          <!-- Log in/Log out button varaiants pinia -->
+          <v-btn v-if="!auth.isLoggedIn" color="black" variant="flat" text="Log In" to="/login" />
+          <v-btn
+            v-if="auth.isLoggedIn"
+            @click="logOut"
+            color="black"
+            variant="flat"
+            text="Log Out"
+          />
         </v-col>
       </v-row>
     </v-container>
