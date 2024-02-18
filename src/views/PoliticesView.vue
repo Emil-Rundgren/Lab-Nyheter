@@ -6,7 +6,8 @@ export default {
     return {
       // The array that gets populated by the map-function
       newsItems: [],
-      itemsPerRow: 3 // Determines how many items per row
+      itemsPerRow: 4, // Determines how many items per row
+      showAlert: false
     }
   },
   computed: {
@@ -14,11 +15,16 @@ export default {
     sliceNewsItems() {
       let result = [] // The sliced arrays
       for (let i = 0; i < this.newsItems.length; i += this.itemsPerRow) {
+        // Syntax arr.slice([startindex,[endindex]])
+        // In my case this.newsItems.slice(0, 0 + 4) so it cuts at 0 until 4 which leads to 4 elements
+        // this.newsItems.length === 20 gives us 5 rows if this.itemsPerRow === 4
+        // So the first result array contains 4 elements [0,1,2,3]
         result.push(this.newsItems.slice(i, i + this.itemsPerRow))
       }
       return result
     }
   },
+  // call the getNews function
   async created() {
     await this.getNews()
   },
@@ -33,9 +39,11 @@ export default {
         // article represents an individual element (object)
         // In each article there are four keys newsImg...
         // If fetched value is falsy(undifined) add default value instead
+        // the slice method ends the array after 20 article have been populated into newsItems
         console.log(response.data.articles)
-        this.newsItems = response.data.articles.map((article) => ({
-          newsImg: article.urlToImage || './neom-WLeWJW_WneE-unsplash.jpeg',
+        this.newsItems = response.data.articles.slice(0, 20).map((article, index) => ({
+          id: index, // Add this line to include an ID
+          newsImg: article.urlToImage || './NewsImg.jpg',
           newsTitle: article.title || 'No title available',
           newsDescription: article.description || 'No description available',
           newsContent: article.content || 'No content available'
@@ -44,30 +52,64 @@ export default {
         console.error(error)
       }
     }
+  },
+  props: {
+    isSearchClicked: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    isSearchClicked(newVal) {
+      if (newVal) {
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+          // Inform the parent component that the alert has been handled
+          this.$emit('reset-search-clicked')
+        }, 5000)
+      }
+    }
   }
 }
 </script>
 
 <template>
+  <v-alert
+    v-if="showAlert === true"
+    closable
+    color="black"
+    title="Search Bar"
+    text="Sorry, the search functionality is temporarily unavailable. We're working on resolving the issue as quickly as possible. Please try again later. Thank you for your patience and understanding."
+    type="warning"
+  ></v-alert>
   <v-container fluid>
     <!-- Header Row -->
     <v-row>
       <v-col cols="4" offset="2">
         <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
-          <h1>World News</h1>
+          <h1>Politices</h1>
         </v-sheet>
       </v-col>
     </v-row>
 
+    <!-- Explanation of the News Rows -->
+    <!-- Step 1 v-for in v-row, row in sliceNewsItems stands for the new sliced arrays that was created, in my case there is 5 new arrays in total -->
+    <!-- Step 2 v-for in v-col, item in row stands for the items in the each sliced array. Each sliced array has in my case 4 elements, so 4 cols will be created in one row -->
+    <!-- Step 3 Repeat step 1 and 2 untill there is no more sliced arrays left -->
+
     <!-- News Rows -->
     <v-row v-for="(row, rowIndex) in sliceNewsItems" :key="`row-${rowIndex}`" justify="center">
-      <v-col cols="4" v-for="(item, index) in row" :key="`item-${index}`">
-        <v-sheet class="ma-2 clickable" style="cursor: pointer">
-          <v-img height="30vh" cover :src="item.newsImg"></v-img>
-        </v-sheet>
-        <v-sheet class="ma-2 clickable" style="cursor: pointer">
-          <h3>{{ item.newsTitle }}</h3>
-        </v-sheet>
+      <v-col cols="3" v-for="(item, index) in row" :key="`item-${index}`">
+        <!-- Navigate user to the article view if the click on the img or title -->
+        <router-link to="/article" class="remove-styling">
+          <v-sheet class="ma-2 clickable" style="cursor: pointer">
+            <v-img height="30vh" cover :src="item.newsImg"></v-img>
+          </v-sheet>
+          <v-sheet class="ma-2 clickable" style="cursor: pointer">
+            <h3>{{ item.newsTitle }}</h3>
+          </v-sheet>
+        </router-link>
       </v-col>
     </v-row>
   </v-container>

@@ -5,13 +5,19 @@ export default {
       drawer: false,
       search: false
     }
+  },
+  methods: {
+    // Navbar Sends an Emit to App through a click-event
+    searchIconClicked() {
+      this.$emit('search-clicked')
+    }
   }
 }
 </script>
 
 <!-- Pinia Script for loging out  -->
 <!-- Because the component is avilable in every view I only need to declare it here -->
-<!-- The log In is in the LogInView -->
+<!-- The log Ins is in the LogInView -->
 <script setup>
 import { loggedInStore } from '@/stores/counter'
 
@@ -28,15 +34,9 @@ function logOut() {
         <v-col cols="8" class="d-flex justify-space-between align-center">
           <!-- Hamburger Menu Navigation-Drawer toggle -->
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-          <!-- Search toggle -->
-          <v-btn icon="mdi-magnify" @click="search = !search" />
-          <!-- Use v-if to toggle the visibility of the search div -->
-          <div v-if="search" class="d-flex align-center">
-            <!-- Search Field and Button -->
-            <v-text-field v-model="searchText" label="Search" hide-details></v-text-field>
-            <v-btn @click="onSearch" text="Go" color="black" variant="flat" />
-          </div>
-          <!-- The title will be centered in the middle of the toolbar -->
+          <!-- Search btn -->
+          <v-btn icon="mdi-magnify" @click="searchIconClicked" />
+
           <v-toolbar-title class="text-center"
             ><router-link to="/" class="remove-styling text-h5 font-weight-black"
               >Real News</router-link

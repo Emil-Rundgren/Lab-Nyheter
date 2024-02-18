@@ -6,7 +6,8 @@ export default {
     return {
       // The array that gets populated by the map-function
       newsItems: [],
-      itemsPerRow: 4 // Determines how many items per row
+      itemsPerRow: 4, // Determines how many items per row
+      showAlert: false
     }
   },
   computed: {
@@ -23,6 +24,7 @@ export default {
       return result
     }
   },
+  // call the getNews function
   async created() {
     await this.getNews()
   },
@@ -37,9 +39,10 @@ export default {
         // article represents an individual element (object)
         // In each article there are four keys newsImg...
         // If fetched value is falsy(undifined) add default value instead
+        // the slice method ends the array after 20 article have been populated into newsItems
         console.log(response.data.articles)
-        this.newsItems = response.data.articles.map((article) => ({
-          newsImg: article.urlToImage || './neom-WLeWJW_WneE-unsplash.jpeg',
+        this.newsItems = response.data.articles.slice(0, 20).map((article) => ({
+          newsImg: article.urlToImage || './NewsImg.jpg',
           newsTitle: article.title || 'No title available',
           newsDescription: article.description || 'No description available',
           newsContent: article.content || 'No content available'
@@ -48,11 +51,38 @@ export default {
         console.error(error)
       }
     }
+  },
+  // Whenever isSearchClicked changes in App.vue, HomeView.vue will receive the updated value which in turn will trigger the watcher which will show the alert box of the search functionality not working for the moment.
+  props: {
+    isSearchClicked: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    isSearchClicked(newVal) {
+      if (newVal) {
+        this.showAlert = true
+        setTimeout(() => {
+          this.showAlert = false
+          this.$emit('reset-search-clicked') // Inform the parent component that the alert has been handled by sending an emit to the App.vue
+        }, 9000)
+      }
+    }
   }
 }
 </script>
 
 <template>
+  <!-- This alert shows up when isSearchClicked is true -->
+  <v-alert
+    v-if="showAlert === true"
+    closable
+    color="black"
+    title="Search Bar"
+    text="Sorry, the search functionality is temporarily unavailable. We're working on resolving the issue as quickly as possible. Please try again later. Thank you for your patience and understanding."
+    type="warning"
+  ></v-alert>
   <v-container fluid>
     <!-- Header Row -->
     <v-row>
@@ -71,12 +101,15 @@ export default {
     <!-- News Rows -->
     <v-row v-for="(row, rowIndex) in sliceNewsItems" :key="`row-${rowIndex}`" justify="center">
       <v-col cols="3" v-for="(item, index) in row" :key="`item-${index}`">
-        <v-sheet class="ma-2 clickable" style="cursor: pointer">
-          <v-img height="30vh" cover :src="item.newsImg"></v-img>
-        </v-sheet>
-        <v-sheet class="ma-2 clickable" style="cursor: pointer">
-          <h3>{{ item.newsTitle }}</h3>
-        </v-sheet>
+        <!-- Navigate user to the article view if the click on the img or title -->
+        <router-link to="/article" class="remove-styling">
+          <v-sheet class="ma-2 clickable" style="cursor: pointer">
+            <v-img height="30vh" cover :src="item.newsImg"></v-img>
+          </v-sheet>
+          <v-sheet class="ma-2 clickable" style="cursor: pointer">
+            <h3>{{ item.newsTitle }}</h3>
+          </v-sheet>
+        </router-link>
       </v-col>
     </v-row>
   </v-container>
