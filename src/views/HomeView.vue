@@ -86,7 +86,7 @@ export default {
   <v-container fluid>
     <!-- Header Row -->
     <v-row>
-      <v-col cols="4" offset="2">
+      <v-col cols="8" sm="4" offset="2">
         <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
           <h1>World News</h1>
         </v-sheet>
@@ -100,11 +100,17 @@ export default {
 
     <!-- News Rows -->
     <v-row v-for="(row, rowIndex) in sliceNewsItems" :key="`row-${rowIndex}`" justify="center">
-      <v-col cols="3" v-for="(item, index) in row" :key="`item-${index}`">
+      <v-col cols="12" sm="6" md="3" v-for="(item, index) in row" :key="`item-${index}`">
         <!-- Navigate user to the article view if the click on the img or title -->
         <router-link to="/article" class="remove-styling">
           <v-sheet class="ma-2 clickable" style="cursor: pointer">
-            <v-img height="30vh" cover :src="item.newsImg"></v-img>
+            <v-img height="30vh" cover :src="item.newsImg">
+              <!-- show loading screen if img hasn't loaded yet -->
+              <template v-slot:placeholder>
+                <div class="d-flex align-center justify-center fill-height">
+                  <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                </div> </template
+            ></v-img>
           </v-sheet>
           <v-sheet class="ma-2 clickable" style="cursor: pointer">
             <h3>{{ item.newsTitle }}</h3>

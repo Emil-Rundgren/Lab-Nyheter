@@ -1,11 +1,18 @@
+<!-- Imports the data from pinia  -->
+<script setup>
+import { loggedInStore } from '@/stores/counter'
+const auth = loggedInStore()
+</script>
+
 <template>
   <v-container fluid>
+    <!-- br -->
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
         <v-img src="./NewsImg.jpg" cover height="400px" class="mb-6 mt-6" />
 
-        <h1 class="font-weight-bold mb-4">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam dolore saepe cumque nam
+        <h1 class="text-h6 text-sm-h5 text-md-h4 font-weight-bold mb-4 text-black">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
         </h1>
 
         <!-- <p class="text-h5 font-weight-bold mb-1">
@@ -37,5 +44,36 @@
         </p>
       </v-col>
     </v-row>
+
+    <!-- This is the blocking div -->
+    <div class="blocking-div" v-if="!auth.isLoggedIn">
+      <div class="login-message">
+        <h2 class="text-h6 text-sm-h5 text-md-h4 font-weight-bold">
+          You need to login to be able to read the content in this article
+        </h2>
+        <!-- When the log In btn is pressed the user is navigated to the Log In page where the user can Log In. If the user does that the value of isLoggedIn in pinia changes to true which removes the blocking div -->
+        <v-btn class="mt-4" color="black" variant="flat" text="Log In" to="/login" />
+      </div>
+    </div>
   </v-container>
 </template>
+
+<style>
+.blocking-div {
+  /* Take up the whole viewport */
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.96); /* White with a bit of transparency */
+  /* To center the div content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-message {
+  text-align: center;
+}
+</style>

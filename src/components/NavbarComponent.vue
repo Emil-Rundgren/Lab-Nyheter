@@ -31,7 +31,7 @@ function logOut() {
   <v-app-bar app density="compact" flat class="app-bar-border">
     <v-container fluid>
       <v-row justify="center">
-        <v-col cols="8" class="d-flex justify-space-between align-center">
+        <v-col cols="12" md="8" class="d-flex justify-space-between align-center">
           <!-- Hamburger Menu Navigation-Drawer toggle -->
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
           <!-- Search btn -->

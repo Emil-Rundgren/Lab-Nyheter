@@ -51,9 +51,9 @@ export default {
       <v-progress-circular v-if="isLoading" indeterminate color="white" />
     </v-overlay>
     <v-row justify="center">
-      <v-col cols="4">
+      <v-col cols="12" sm="8" md="4">
         <v-card class="pa-4">
-          <v-card-title class="text-center text-h5 font-weight-bold"
+          <v-card-title class="text-center text-h6 text-sm-h5 font-weight-bold"
             >Log in or create an account</v-card-title
           >
           <v-card-item>

@@ -41,8 +41,7 @@ export default {
         // If fetched value is falsy(undifined) add default value instead
         // the slice method ends the array after 20 article have been populated into newsItems
         console.log(response.data.articles)
-        this.newsItems = response.data.articles.slice(0, 20).map((article, index) => ({
-          id: index, // Add this line to include an ID
+        this.newsItems = response.data.articles.slice(0, 20).map((article) => ({
           newsImg: article.urlToImage || './NewsImg.jpg',
           newsTitle: article.title || 'No title available',
           newsDescription: article.description || 'No description available',
@@ -53,6 +52,7 @@ export default {
       }
     }
   },
+  // Whenever isSearchClicked changes in App.vue, HomeView.vue will receive the updated value which in turn will trigger the watcher which will show the alert box of the search functionality not working for the moment.
   props: {
     isSearchClicked: {
       type: Boolean,
@@ -65,9 +65,8 @@ export default {
         this.showAlert = true
         setTimeout(() => {
           this.showAlert = false
-          // Inform the parent component that the alert has been handled
-          this.$emit('reset-search-clicked')
-        }, 5000)
+          this.$emit('reset-search-clicked') // Inform the parent component that the alert has been handled by sending an emit to the App.vue
+        }, 9000)
       }
     }
   }
@@ -75,6 +74,7 @@ export default {
 </script>
 
 <template>
+  <!-- This alert shows up when isSearchClicked is true -->
   <v-alert
     v-if="showAlert === true"
     closable
@@ -86,7 +86,7 @@ export default {
   <v-container fluid>
     <!-- Header Row -->
     <v-row>
-      <v-col cols="4" offset="2">
+      <v-col cols="8" sm="4" offset="2">
         <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
           <h1>Politices</h1>
         </v-sheet>
@@ -100,11 +100,17 @@ export default {
 
     <!-- News Rows -->
     <v-row v-for="(row, rowIndex) in sliceNewsItems" :key="`row-${rowIndex}`" justify="center">
-      <v-col cols="3" v-for="(item, index) in row" :key="`item-${index}`">
+      <v-col cols="12" sm="6" md="3" v-for="(item, index) in row" :key="`item-${index}`">
         <!-- Navigate user to the article view if the click on the img or title -->
         <router-link to="/article" class="remove-styling">
           <v-sheet class="ma-2 clickable" style="cursor: pointer">
-            <v-img height="30vh" cover :src="item.newsImg"></v-img>
+            <v-img height="30vh" cover :src="item.newsImg">
+              <!-- show loading screen if img hasn't loaded yet -->
+              <template v-slot:placeholder>
+                <div class="d-flex align-center justify-center fill-height">
+                  <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                </div> </template
+            ></v-img>
           </v-sheet>
           <v-sheet class="ma-2 clickable" style="cursor: pointer">
             <h3>{{ item.newsTitle }}</h3>
