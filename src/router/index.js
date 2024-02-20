@@ -40,7 +40,8 @@ const router = createRouter({
       component: Health
     },
     {
-      path: '/article',
+      // Route parameters that changes depending on the which View(category) the user is on
+      path: '/:category/article',
       name: 'article',
       component: Article
     }

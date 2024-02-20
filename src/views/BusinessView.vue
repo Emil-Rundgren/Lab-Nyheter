@@ -7,7 +7,8 @@ export default {
       // The array that gets populated by the map-function
       newsItems: [],
       itemsPerRow: 4, // Determines how many items per row
-      showAlert: false
+      showAlert: false,
+      category: 'business' // This explicitly sets the category for this component
     }
   },
   computed: {
@@ -102,7 +103,7 @@ export default {
     <v-row v-for="(row, rowIndex) in sliceNewsItems" :key="`row-${rowIndex}`" justify="center">
       <v-col cols="12" sm="6" md="3" v-for="(item, index) in row" :key="`item-${index}`">
         <!-- Navigate user to the article view if the click on the img or title -->
-        <router-link to="/article" class="remove-styling">
+        <router-link :to="`/${this.category}/article`" class="remove-styling">
           <v-sheet class="ma-2 clickable" style="cursor: pointer">
             <v-img height="30vh" cover :src="item.newsImg">
               <!-- show loading screen if img hasn't loaded yet -->
