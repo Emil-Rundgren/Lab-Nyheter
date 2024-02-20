@@ -33,7 +33,7 @@ export default {
     async getNews() {
       try {
         const response = await axios.get(
-          'https://newsapi.org/v2/top-headlines?country=us&apiKey=65198de0fc7e418eb3db417f3e104479'
+          'https://newsapi.org/v2/top-headlines?category=science&country=us&apiKey=65198de0fc7e418eb3db417f3e104479'
         )
         // Add data to newsItems after news data is fetched
         // article represents an individual element (object)
@@ -88,7 +88,7 @@ export default {
     <v-row>
       <v-col cols="8" sm="4" offset="2">
         <v-sheet class="ma-2" style="border-bottom: 1px solid #cecece">
-          <h1>Politices</h1>
+          <h1>Science</h1>
         </v-sheet>
       </v-col>
     </v-row>

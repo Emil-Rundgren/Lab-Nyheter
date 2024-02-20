@@ -4,7 +4,7 @@ export default {
   data() {
     return {
       icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
-      links: ['Home', 'Politics', 'Business', 'Health', 'Sport']
+      links: ['Home', 'Sports', 'Science', 'Business', 'Health']
     }
   },
   methods: {

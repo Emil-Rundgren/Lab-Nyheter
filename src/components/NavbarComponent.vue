@@ -65,22 +65,20 @@ function logOut() {
         ></v-list-item
       >
       <v-list-item>
-        <router-link to="/politices" class="remove-styling font-weight-medium"
-          >Politices</router-link
-        >
+        <router-link to="/Sports" class="remove-styling font-weight-medium">Sports</router-link>
       </v-list-item>
 
       <v-list-item>
-        <router-link to="/" class="remove-styling font-weight-medium">Business</router-link>
+        <router-link to="/science" class="remove-styling font-weight-medium">Science</router-link>
       </v-list-item>
       <v-list-item
-        ><router-link to="/" class="remove-styling font-weight-medium"
-          >Health</router-link
+        ><router-link to="/business" class="remove-styling font-weight-medium"
+          >Business</router-link
         ></v-list-item
       >
 
       <v-list-item>
-        <router-link to="/" class="remove-styling font-weight-medium">Sport</router-link>
+        <router-link to="/health" class="remove-styling font-weight-medium">Health</router-link>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>

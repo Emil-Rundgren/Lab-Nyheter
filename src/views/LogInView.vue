@@ -47,7 +47,7 @@ export default {
 
 <template>
   <v-container fluid>
-    <v-overlay :model-value="isLoading">
+    <v-overlay class="d-flex align-center justify-center fill-height" :model-value="isLoading">
       <v-progress-circular v-if="isLoading" indeterminate color="white" />
     </v-overlay>
     <v-row justify="center">
