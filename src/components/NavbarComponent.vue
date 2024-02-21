@@ -11,17 +11,17 @@ export default {
     searchIconClicked() {
       this.$emit('search-clicked')
     }
-  }
+  },
+  computed: {}
 }
 </script>
 
 <!-- Pinia Script for loging out  -->
-<!-- Because the component is avilable in every view I only need to declare it here -->
-<!-- The log Ins is in the LogInView -->
+<!-- The log In is in the LogInView -->
 <script setup>
 import { loggedInStore } from '@/stores/counter'
-
 const auth = loggedInStore()
+// When the user clicks on log out this function gets executed which changes the value of this.isLoggedIn = false in pinia. This in turn changes the btn that is being displayed form the Log In btn to Log Out.
 function logOut() {
   auth.logOut()
 }
@@ -92,6 +92,6 @@ function logOut() {
 /* Removes the styling from the routerlink on the newswebsite title */
 .remove-styling {
   text-decoration: none; /* Removes the underline */
-  color: inherit; /* Inherits the color from the parent element */
+  color: black;
 }
 </style>

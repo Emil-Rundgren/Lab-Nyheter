@@ -28,8 +28,9 @@ export default {
         <div>
           <v-btn v-for="icon in icons" :key="icon" class="mx-4" :icon="icon"></v-btn>
         </div>
-        <!-- Add the current year being putting in js directly inside the template -->
+
         <div class="text-center mt-8">
+          <!-- Code to get the current year -->
           {{ new Date().getFullYear() }} — <strong>Real News</strong>
         </div>
       </v-col>

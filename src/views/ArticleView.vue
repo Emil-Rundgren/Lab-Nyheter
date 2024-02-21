@@ -9,7 +9,7 @@ const auth = loggedInStore()
     <!-- br -->
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8">
-        <v-img src="./NewsImg.jpg" cover height="400px" class="mb-6 mt-6" />
+        <v-img src="/NewsImg.jpg" cover height="35vh" class="mb-6 mt-6" />
 
         <h1 class="text-h6 text-sm-h5 text-md-h4 font-weight-bold mb-4 text-black">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit.

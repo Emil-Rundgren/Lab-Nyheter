@@ -94,12 +94,13 @@ export default {
     </v-row>
 
     <!-- Explanation of the News Rows -->
-    <!-- Step 1 v-for in v-row, row in sliceNewsItems stands for the new sliced arrays that was created, in my case there is 5 new arrays in total -->
+    <!-- Step 1 v-for in v-row, row in sliceNewsItems stands for the new sliced arrays that was created sliceNewsItems(), in my case there is 5 new arrays in total -->
     <!-- Step 2 v-for in v-col, item in row stands for the items in the each sliced array. Each sliced array has in my case 4 elements, so 4 cols will be created in one row -->
     <!-- Step 3 Repeat step 1 and 2 untill there is no more sliced arrays left -->
 
     <!-- News Rows -->
     <v-row v-for="(row, rowIndex) in sliceNewsItems" :key="`row-${rowIndex}`" justify="center">
+      <!-- sliceNewsItems() when screen size is less then 600px there will only be one news per row -->
       <v-col cols="12" sm="6" md="3" v-for="(item, index) in row" :key="`item-${index}`">
         <!-- Navigate user to the article view if the click on the img or title -->
         <router-link :to="`/${this.category}/article`" class="remove-styling">
